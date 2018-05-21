@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
         username: 'wellch4n',
         password: 'well1995',
         salt: 'well'
-    }
+    };
     db.User.create(user, (err) => {
         if (err) {
             console.log(err);

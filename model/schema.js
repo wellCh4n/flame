@@ -9,7 +9,6 @@ const userSchema = new Schema({
 },{versionKey: false});
 
 const articleSchema = new Schema({
-    aId: {type: Number, index: {unique: true}},
     title: String,
     description: String,
     content: String,
@@ -18,29 +17,28 @@ const articleSchema = new Schema({
     isPublished: Boolean,
     modifyTime: Date,
     createTime: Date
-},{versionKey: true});
+},{versionKey: false});
 
 const commentSechema = new Schema({
-    cId: {type: Number, index: {unique: true}},
     nickname: String,
     content: String,
-    aId: Number,
+    aId: String,
     blocked: Boolean,
     createTime: Date
-});
+},{versionKey: false});
 
 const tagSechema = new Schema({
     name: {type: String, index: {unique: true}},
-    aId: Number,
+    aId: String,
     aTitle: String,
     aDescription: String,
     createTime: Date
-});
+},{versionKey: false});
 
 const Models = {
     User: mongoose.model('User', userSchema),
     Article: mongoose.model('Article', articleSchema),
-    Comment: mongoose.model('Comment,', commentSechema),
+    Comment: mongoose.model('Comment', commentSechema),
     Tag: mongoose.model('Tag', tagSechema)
 };
 
