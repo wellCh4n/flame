@@ -9,10 +9,11 @@ var confirmToken = (req, res, next) => {
         jwt.verify(token, 'well', function (err) {
             if (err) {
                 formatResponse.send(res, false, '鉴权失败', null);
+            } else {
+                next();
             }
         })
     }
-    next();
 };
 
 module.exports = confirmToken;
