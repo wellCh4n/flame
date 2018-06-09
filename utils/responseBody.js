@@ -8,4 +8,24 @@ var send = (res, isOk, message, data)=>{
     );
 };
 
-module.exports.send = send;
+var sendSuccess = (res ,data) => {
+    res.send({
+        'code': 1,
+        'message': '执行成功',
+        'data': data
+    })
+};
+
+var sendError = (res, err) => {
+    res.send({
+        'code': -1,
+        'message': '执行失败',
+        'error': err
+    })
+}
+
+module.exports = {
+    send,
+    sendSuccess,
+    sendError
+};
