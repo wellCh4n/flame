@@ -8,7 +8,7 @@ var createToken = (id, username) => {
     return jwt.sign({
         id: id,
         username: username
-    }, 'well', { expiresIn: '7d' })
+    }, 'well', {expiresIn: '7d'})
 };
 
 router.post('/login', (req, res) => {
@@ -18,7 +18,7 @@ router.post('/login', (req, res) => {
         } else {
             if (doc.password === req.body.password) {
                 const token = createToken(doc._id, doc.username);
-                res.cookie('flame_token', token, { httpOnly: true });
+                res.cookie('flame_token', token, {httpOnly: true});
                 formatResponse.send(res, true, '登录成功', {
                     id: doc._id,
                     name: doc.username,

@@ -1,12 +1,13 @@
-const mongoose  = require('mongoose');
+const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     username: String,
     nickname: String,
     password: String,
-    salt: String  // salt
-},{versionKey: false});
+    salt: String
+}, {versionKey: false});
 
 const articleSchema = new Schema({
     title: String,
@@ -17,7 +18,8 @@ const articleSchema = new Schema({
     isPublished: Boolean,
     modifyTime: Date,
     createTime: Date
-},{versionKey: false});
+}, {versionKey: false});
+articleSchema.plugin(mongoosePaginate);
 
 const commentSechema = new Schema({
     nickname: String,
@@ -25,7 +27,7 @@ const commentSechema = new Schema({
     aId: String,
     blocked: Boolean,
     createTime: Date
-},{versionKey: false});
+}, {versionKey: false});
 
 const tagSechema = new Schema({
     name: {type: String, index: {unique: true}},
@@ -33,7 +35,7 @@ const tagSechema = new Schema({
     aTitle: String,
     aDescription: String,
     createTime: Date
-},{versionKey: false});
+}, {versionKey: false});
 
 const Models = {
     User: mongoose.model('User', userSchema),

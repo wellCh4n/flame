@@ -10,14 +10,16 @@ var getArticle = (id, callback) => {
     })
 };
 
-var getArticleList = (title, callback) => {
-    db.Article.find({title: new RegExp(title, "i")}, (err, doc) => {
-        if (err) {
-            console.log(err);
-            callback(err);
-        }
-        callback(null, doc);
-    })
+var getArticleList = (title, page, size, callback) => {
+    db.Article.paginate({title: new RegExp(title, 'i')},
+        {page: +page, limit: +size},
+        (err, doc) => {
+            if (err) {
+                console.log(err);
+                callback(err);
+            }
+            callback(null, doc);
+        })
 };
 
 var addArticle = (article, callback) => {

@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require('../model/schema');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     const user = {
         username: 'wellch4n',
         password: 'well1995',

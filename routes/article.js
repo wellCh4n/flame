@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var formatResponse = require('../utils/responseBody');
 var verifyToken = require('../middlewares/verifyToken');
+var formatResponse = require('../utils/responseBody');
 var articleService = require('../service/articleService');
+var config = require('../config/config');
 
 router.get('/getArticle', (req, res) => {
     articleService.getArticle(req.query.id, (err, data) => {
@@ -15,7 +16,9 @@ router.get('/getArticle', (req, res) => {
 
 router.get('/getArticleList', (req, res) => {
     var title = req.query.title == null ? "" : req.query.title;
-    articleService.getArticleList(title, (err, data) => {
+    var page = req.query.page == (null || 0) ? 1 : req.query.page;
+    var size = req.query.size == (null || 0) ? config.defaultPageSize : req.query.size;
+    articleService.getArticleList(title, page, size, (err, data) => {
         if (err) {
             formatResponse.sendError(res, err);
         }

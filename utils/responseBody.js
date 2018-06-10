@@ -1,14 +1,14 @@
-var send = (res, isOk, message, data)=>{
+var send = (res, isOk, message, data) => {
     res.send(
         {
-            'code': isOk? 1: -1,
+            'code': isOk ? 1 : -1,
             'message': message,
             'data': data
         }
     );
 };
 
-var sendSuccess = (res ,data) => {
+var sendSuccess = (res, data) => {
     res.send({
         'code': 1,
         'message': '执行成功',
