@@ -13,6 +13,7 @@ const articleSchema = new Schema({
     title: String,
     description: String,
     content: String,
+    markdown: String,
     tag: [String],
     commentCount: Number,
     isPublished: Boolean,

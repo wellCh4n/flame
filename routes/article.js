@@ -15,9 +15,9 @@ router.get('/getArticle', (req, res) => {
 });
 
 router.get('/getArticleList', (req, res) => {
-    var title = req.query.title == null ? "" : req.query.title;
-    var page = req.query.page == (null || 0) ? 1 : req.query.page;
-    var size = req.query.size == (null || 0) ? config.defaultPageSize : req.query.size;
+    let title = req.query.title == undefined ? "" : req.query.title;
+    let page = req.query.page == undefined ? 1 : req.query.page;
+    let size = req.query.size == undefined ? config.defaultPageSize : req.query.size;
     articleService.getArticleList(title, page, size, (err, data) => {
         if (err) {
             formatResponse.sendError(res, err);
@@ -29,34 +29,36 @@ router.get('/getArticleList', (req, res) => {
 router.post('/addArticle', verifyToken, (req, res) => {
     const article = {
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        markdown: req.body.markdown,
+        tags: req.body.tags
     };
     articleService.addArticle(article, (err) => {
         if (err) {
             formatResponse.sendError(res, err);
         }
-        formatResponse.sendSuccess(res, null);
+        formatResponse.sendSuccess(res);
     })
 });
 
 router.post('/updateArticle', verifyToken, (req, res) => {
-    var condition = {_id: req.body.id};
-    var updates = {$set: {title: req.body.title, content: req.body.content}};
+    let condition = {_id: req.body.id};
+    let updates = {$set: {title: req.body.title, content: req.body.content, markdown: req.body.markdown}};
     articleService.updateArticle(condition, updates, (err) => {
         if (err) {
             formatResponse.sendError(res, err);
         }
-        formatResponse.sendSuccess(res, null);
+        formatResponse.sendSuccess(res);
     })
 });
 
 router.post('/removeArticle', verifyToken, (req, res) => {
-    var condition = {_id: req.body.id};
+    let condition = {_id: req.body.id};
     articleService.removeArticle(condition, (err) => {
         if (err) {
             formatResponse.sendError(res, err);
         }
-        formatResponse.sendSuccess(res, null);
+        formatResponse.sendSuccess(res);
     })
 });
 

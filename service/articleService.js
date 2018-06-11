@@ -1,7 +1,7 @@
-var db = require('../model/schema')
+var db = require('../model/schema');
 
 var getArticle = (id, callback) => {
-    db.Article.find({_id: id}, (err, doc) => {
+    db.Article.findOne({_id: id}, (err, doc) => {
         if (err) {
             console.log(err);
             callback(err);
@@ -11,15 +11,13 @@ var getArticle = (id, callback) => {
 };
 
 var getArticleList = (title, page, size, callback) => {
-    db.Article.paginate({title: new RegExp(title, 'i')},
-        {page: +page, limit: +size},
-        (err, doc) => {
-            if (err) {
-                console.log(err);
-                callback(err);
-            }
-            callback(null, doc);
-        })
+    db.Article.paginate({title: new RegExp(title, 'i')}, {page: +page, limit: +size}, (err, doc) => {
+        if (err) {
+            console.log(err);
+            callback(err);
+        }
+        callback(null, doc);
+    })
 };
 
 var addArticle = (article, callback) => {

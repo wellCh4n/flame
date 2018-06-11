@@ -14,18 +14,20 @@ var createToken = (id, username) => {
 router.post('/login', (req, res) => {
     db.User.findOne({username: req.body.username}, (err, doc) => {
         if (err) {
-            console.log(err);
+            formatResponse.sendError(res, err);
+        } else if (doc == null){
+            formatResponse.sendError(res, '无此用用户');
         } else {
             if (doc.password === req.body.password) {
                 const token = createToken(doc._id, doc.username);
-                res.cookie('flame_token', token, {httpOnly: true});
-                formatResponse.send(res, true, '登录成功', {
+                let data = {
                     id: doc._id,
                     name: doc.username,
                     token: token
-                });
+                };
+                formatResponse.sendSuccess(res, data);
             } else {
-                formatResponse.send(res, false, '登录失败', null);
+                formatResponse.sendError(res, '密码错误');
             }
         }
     })
